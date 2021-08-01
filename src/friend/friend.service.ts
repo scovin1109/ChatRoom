@@ -14,24 +14,15 @@ export class FriendService {
       ){}
 
 
-    async getFriends(userId:string){
-        const getFriendsByUserId = async(userId:string):Promise<IOEither<Error,Object>>=> tryCatch(async()=> 
+    async getFriends(userId:string):Promise<IOEither<Error,Object>>{
+        return(
+        tryCatch(async()=> 
         userId
         ?{ msg:'獲取好友成功', data: await this.friendRepository.find({userId: userId}) }
-        :{ msg:'獲取好友失敗', data: await this.friendRepository.find() }
+        :{ msg:'獲取好友成功', data: await this.friendRepository.find({userId: userId}) }
         ,toError)
-        return getFriendsByUserId(userId)
-        // try {
-        //     if(userId) {
-        //       return { msg:'獲取好友成功', data: await this.friendRepository.find({userId: userId}) };
-        //     } else {
-        //       return { msg:'獲取好友失敗', data: await this.friendRepository.find() };
-        //     }
-        //   } catch(e) {
-        //     return { msg:'獲取好友失敗', data:e };
-        //   }
+        )
     }
-
     
 
     // async getFriendMessages(userId: string, friendId: string, current: number, pageSize: number) {

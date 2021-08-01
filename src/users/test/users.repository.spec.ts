@@ -43,11 +43,11 @@ describe('UsersRepository', () => {
           user = await usersRepository.findOne(userFilterQuery);
         })
 
-        test('then it should call the userModel', () => {
+        it('then it should call the userModel', () => {
           expect(userModel.findOne).toHaveBeenCalledWith(userFilterQuery, { _id: 0, __v: 0 });
         })
 
-        test('then it should return a user', () => {
+        it('then it should return a user', () => {
           expect(user).toEqual(userStub());
         })
       })
@@ -62,11 +62,11 @@ describe('UsersRepository', () => {
           users = await usersRepository.find(userFilterQuery);
         })
 
-        test('then it should call the userModel', () => {
+        it('then it should call the userModel', () => {
           expect(userModel.find).toHaveBeenCalledWith(userFilterQuery);
         })
 
-        test('then it should return a user', () => {
+        it('then it should return a user', () => {
           expect(users).toEqual([userStub()]);
         })
       })
@@ -81,11 +81,11 @@ describe('UsersRepository', () => {
           user = await usersRepository.findOneAndUpdate(userFilterQuery, userStub());
         })
 
-        test('then it should call the userModel', () => {
+        it('then it should call the userModel', () => {
           expect(userModel.findOneAndUpdate).toHaveBeenCalledWith(userFilterQuery, userStub(), { new: true });
         })
 
-        test('then it should return a user', () => {
+        it('then it should return a user', () => {
           expect(user).toEqual(userStub());
         })
       })
@@ -119,12 +119,12 @@ describe('UsersRepository', () => {
           user = await usersRepository.create(userStub());
         })
 
-        test('then it should call the userModel', () => {
+        it('then it should call the userModel', () => {
           expect(saveSpy).toHaveBeenCalled();
           expect(constructorSpy).toHaveBeenCalledWith(userStub())
         })
 
-        test('then it should return a user', () => {
+        it('then it should return a user', () => {
           expect(user).toEqual(userStub());
         })
       })

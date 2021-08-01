@@ -1,13 +1,12 @@
 import { WebSocketGateway, SubscribeMessage, MessageBody,ConnectedSocket,WebSocketServer} from '@nestjs/websockets';
 import * as WebSocket from 'ws';
 import { IO} from 'fp-ts/lib/IO'
-import { log } from 'fp-ts/lib/Console'
 import { ChatRepository } from './chat.repository';
-import { pipe } from 'fp-ts/lib/function';
+import { UserMap } from 'src/friend/schemas/friend.schema';
 
 @WebSocketGateway(3002)
 export class ChatGateway  {
-  constructor( private readonly chatRepository : ChatRepository){}
+  constructor(private readonly chatRepository : ChatRepository){}
   @WebSocketServer() server: any;
   
     @SubscribeMessage('hello')
@@ -30,8 +29,11 @@ export class ChatGateway  {
      this.server.clients.forEach(client => {
         client.send(JSON.stringify({ event: 'newMessage', data: data, time:now()}));
       });
-     this.chatRepository.create(payload)
-
+     await this.chatRepository.create(payload)
+     
     }
-  
+
+    
+ 
+
 }

@@ -1,6 +1,6 @@
 import { Test } from "@nestjs/testing"
 import { CreateUserDto } from "../dto/create-user.dto";
-// import { UpdateUserDto } from "../dto/update-user.dto";
+
 import { User } from "../schemas/user.schema";
 
 import { UsersController } from "../users.controller"
@@ -33,11 +33,11 @@ describe('UsersController', () => {
         user = await usersController.getUser(userStub().userId)  
       })
 
-      test('then it should call usersService', () => {
+      it('then it should call usersService', () => {
         expect(usersService.getUserById).toBeCalledWith(userStub().userId);
       })
 
-      test('then is should return a user', () => {
+      it('then is should return a user', () => {
         expect(user).toEqual(userStub());
       })
     })
@@ -51,11 +51,11 @@ describe('UsersController', () => {
         users = await usersController.getUsers();
       })
 
-      test('then it should call usersService', () => {
+      it('then it should call usersService', () => {
         expect(usersService.getUsers).toHaveBeenCalled();
       })
 
-      test('then it should return users', () => {
+      it('then it should return users', () => {
         expect(users).toEqual([userStub()])
       })
     })
@@ -75,11 +75,11 @@ describe('UsersController', () => {
         user = await usersController.createUser(createUserDto);
       })
 
-      test('then it should call usersService', () => {
+      it('then it should call usersService', () => {
         expect(usersService.createUser).toHaveBeenCalledWith(createUserDto.email, createUserDto.account,createUserDto.passwords);
       })
 
-      test('then it should return a user', () => {
+      it('then it should return a user', () => {
         expect(user).toEqual(userStub())
       })
     })
@@ -98,11 +98,11 @@ describe('UsersController', () => {
   //       user = await usersController.updateUser(userStub().userId, updateUserDto);
   //     })
 
-  //     test('then it should call usersService', () => {
+  //     it('then it should call usersService', () => {
   //       expect(usersService.updateUser).toHaveBeenCalledWith(userStub().userId, updateUserDto);
   //     })
 
-  //     test('then it should return a user', () => {
+  //     it('then it should return a user', () => {
   //       expect(user).toEqual(userStub())
   //     })
   //   })

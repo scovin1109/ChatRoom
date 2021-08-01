@@ -1,4 +1,4 @@
-import { Chat_message } from "../schema/chat_message.entity"
+import { Chat_message } from "../schema/chat_message.schema"
 
 export const chatStub = ():Chat_message=> {
  return {

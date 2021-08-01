@@ -4,8 +4,6 @@ import { ChatModule } from './chat/chat.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { FriendController } from './friend/friend.controller';
-import { FriendService } from './friend/friend.service';
 import { FriendModule } from './friend/friend.module';
 
 @Module({

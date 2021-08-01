@@ -33,10 +33,8 @@ describe('FriendController', () => {
 
   it('should find the user friends', async()=>{
     const userId = '123'
-    expect(await friendservice.getFriends(userId)).toEqual({
-      msg: "獲取好友成功",
-      data: expect.any(Object),
-    })
+    const expected = expect.any(Function)
+    expect(await friendservice.getFriends(userId)).toEqual(expected)
   })
 
 

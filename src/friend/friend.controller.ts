@@ -1,5 +1,5 @@
   
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { FriendService } from './friend.service';
 
 
@@ -12,8 +12,4 @@ export class FriendController {
     return this.friendService.getFriends(userId);
   }
 
-//   @Get('/friendMessages')
-//   getFriendMessage(@Query() query: any) {
-//     return this.friendService.getFriendMessages(query.userId, query.friendId, query.current, query.pageSize);
-//   }
 }
