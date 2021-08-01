@@ -25,16 +25,4 @@ export class FriendService {
     }
     
 
-    // async getFriendMessages(userId: string, friendId: string, current: number, pageSize: number) {
-    //     const messages = await connect(FriendMessages)
-    //       .createQueryBuilder("friendMessage")
-    //       .orderBy("friendMessage.time", "DESC")
-    //       .where("friendMessage.userId = :userId AND friendMessages.friendId = :friendId", { userId: userId, friendId: friendId })
-    //       .orWhere("friendMessage.userId = :friendId AND friendMessages.friendId = :userId", { userId: userId, friendId: friendId })
-    //       .skip(current)
-    //       .take(pageSize)
-    //       .getMany();
-    //     return {msg: '', data: { messageArr: messages.reverse() }};
-    //   }
-
 }

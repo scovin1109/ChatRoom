@@ -8,46 +8,83 @@
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
       form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%;background-color: #b7d7ea; }
+      form button { width: 9%; background: #e4c219; border: none; padding: 10px; }
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
       #messages { margin-bottom: 40px }
+      
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
-    <title>聊天囉</title>
+    
 </head>
 <body>
-    <%= title %>
+    <div class="title">聊天室</div> 
     <ul id="messages"></ul>
     <form id='chatForm' action="">
       <input id="chatMessage" autocomplete="off" /><button>Send</button>
     </form>
     <script>    
-        const socket = io('ws://localhost:4040/messages');
+        Date.prototype.format = function (fmt) {
+            var o = {
+                "M+": this.getMonth() + 1,                   //月份
+                "d+": this.getDate(),                        //日
+                "h+": this.getHours(),                       //小时
+                "m+": this.getMinutes(),                     //分
+                "s+": this.getSeconds(),                     //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds()                  //毫秒
+            };
+
+            if (/(y+)/i.test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            }
+
+            for (var k in o) {
+                // ②
+                if (new RegExp("(" + k + ")", "i").test(fmt)) {
+                fmt = fmt.replace(
+                    RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                }
+            }
+            return fmt;
+            }
+        const websocket = new WebSocket('ws://localhost:3002');
         $('#chatForm').submit(function(){
             //推訊息
-            console.log('sss')
-            socket.emit('PushMessage', $('#chatMessage').val());
+            websocket.send(JSON.stringify({event:'PushMessage',data:$('#chatMessage').val()}));
             $('#chatMessage').val('');
             return false;
         });
         //監聽新訊息事件
-         socket.onmessage('newMessage', function(msg){
-            //顯示訊息 
-            $('#messages').append($('<li>').text(msg));
+        websocket.onmessage = ('newMessage', function(msg){
+            let message =JSON.parse(msg.data);
+            let date = Date(message.time)
+    
+           
+            $('#messages').append($('<li>').text(message.data+'\t'+date));
             window.scrollTo(0, document.body.scrollHeight);
         });
         //監聽連線事件
-        socket.on('connect', function() {
+        websocket.onopen = ('connect', function() {
             console.log('Connected');
         });
         //監聽斷線事件
-        socket.on('disconnect', function() {
+        websocket.onclose = ('disconnect', function() {
             console.log('Disconnected');
         });
+
     </script>
 </body>
+<style>
+    .title{
+        background-color: #fd7e7e;
+        font-size: 20px;
+        text-align: center;
+        color: white;
+      }
+
+</style>
 </html>
